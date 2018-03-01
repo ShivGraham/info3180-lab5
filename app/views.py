@@ -54,6 +54,11 @@ def login():
             return redirect(url_for('secure-page'))  # they should be redirected to a secure-page route instead
     return render_template("login.html", form=form)
 
+@app.route('/secure-page')
+@login_required
+def secure_page():
+    """Renders a secure page that only logged in users can access."""
+    return render_template('secure_page.html')
 
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session
