@@ -35,12 +35,6 @@ def login():
         # changed this to actually validate the entire form submission
         # and not just one field
         if form.validate_on_submit():
-            # Get the username and password values from the form.
-
-            # using your model, query database for a user based on the username
-            # and password submitted
-            # store the result of that query to a `user` variable so it can be
-            # passed to the login_user() method.
             u_name = form.username.data
             pwd = form.password.data
             
@@ -51,8 +45,18 @@ def login():
 
             # remember to flash a message to the user
             flash('Successfully logged in', 'success')
-            return redirect(url_for('secure-page'))  # they should be redirected to a secure-page route instead
+            return redirect(url_for('secure_page'))  # redirected to a secure-page route instead
     return render_template("login.html", form=form)
+
+@app.route('/logout')
+@login_required
+def logout():
+    """Logs out current user"""
+    logout_user()
+    
+    flash ('You are now logged out', 'danger')
+    return redirect( url_for('home'))
+    
 
 @app.route('/secure-page')
 @login_required
